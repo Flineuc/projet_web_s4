@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <div id="tete">
+          <img alt="Vue logo" src="./assets/logo.png">
+     </div>
+
+      <div id="liste">
+        <HelloWorld msg="BONHOMME 1"/>
+        <HelloWorld msg="BONHOMME 2"/>
+       </div>
+
   </div>
+
 </template>
 
 <script>
@@ -18,11 +26,18 @@ export default {
 
 <style>
 #app {
+}
+
+#liste {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ea00ff;
   margin-top: 60px;
+  display :flex;
+  justify-items: flex-start;
 }
+
+
 </style>
