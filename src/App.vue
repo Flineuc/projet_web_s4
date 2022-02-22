@@ -5,8 +5,9 @@
      </div>
 
       <div id="liste">
-        <HelloWorld msg="BONHOMME 1"/>
-        <HelloWorld msg="BONHOMME 2"/>
+        <HelloWorld msg="Animal 1"/>
+        <HelloWorld msg="Animal 2"/>
+        <HelloWorld msg="Animal 3"/>
        </div>
 
   </div>
@@ -15,6 +16,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+
 
 export default {
   name: 'App',
