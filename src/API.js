@@ -1,10 +1,11 @@
-const getAPIdata = async function() {
-    const response = await fetch("https://api.adoptapet.com") 
+const getAnimaldata = async function() {
+    const response = await fetch("https://zoo-animal-api.herokuapp.com/animals/rand/10") 
     if (response.status == 200) {
-        const data = response.json()
+        const data = await response.json()
+        return data
     } else {
     new Error(response.statusText)
     }
 }
 
-export { getAPIdata }
+export { getAnimaldata }
