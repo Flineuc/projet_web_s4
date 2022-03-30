@@ -55,8 +55,8 @@ export default {
 		animalsOrganizedData: function() {
 			//const field = ["AZNoms"].includes(this.animalsSortType) 
 			//const reversed = ["ZANoms"].includes(this.animalsSortType)
-			const comparator = (a, b) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()) 
-			let data = this.animalData.sort(comparator)
+			//const comparator = (a, b) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()) 
+			let data = this.animalData //.sort(comparator)
 			//if (reversed) data = data.reverse()
 			return data;
 		}
