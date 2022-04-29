@@ -10,8 +10,8 @@
             <select v-model="animalsSortType" id="animal_tri">
               <option value="AZNoms">Noms de A à Z</option>
               <option value="ZANoms">Noms de Z à A</option>
-              <!--<option value="PoidsSup">Poids croissant</option>
-              <option value="TailleSup">Taille croissante</option>-->
+              <option value="AZNomsLatins">Noms Latins de A à Z</option>
+              <option value="ZANomsLatins">Noms Latins de Z à A</option>
               <option value="VieSup">Duree de vie</option>
             </select>
           </div>
@@ -53,14 +53,36 @@ export default {
 
   computed: {
 		animalsOrganizedData: function() {
-			//const field = ["AZNoms"].includes(this.animalsSortType) 
-			//const reversed = ["ZANoms"].includes(this.animalsSortType)
-			//const comparator = (a, b) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()) 
-			let data = this.animalData //.sort(comparator)
-			//if (reversed) data = data.reverse()
+      
+      let lifespanSorted;
+      let sortReversed;
+      let data = this.animalData;
+      //this.animalsSortType = localStorage.getItem("typeActuel");
+      let comparator;
+
+			if(this.animalsSortType=="AZNoms" || this.animalsSortType=="AZNomsLatins"){
+        sortReversed = false;
+      }
+      if(this.animalsSortType=="ZANoms" || this.animalsSortType=="ZANomsLatins") {
+        sortReversed = true;
+      }
+      if(this.animalsSortType=="VieSup") {
+          lifespanSorted=true;
+      }
+
+      if(this.animalsSortType=="AZNoms"||this.animalsSortType=="ZANoms") {  comparator = (a, b) => a.name.localeCompare(b.name) ;	  } 
+      else  comparator = (a, b) => a.latin_name.localeCompare(b.latin_name) ;
+      data.sort(comparator);
+      if(sortReversed==true) { data.reverse(); }
+      if(lifespanSorted==true){ data.sort(function (a, b) {console.log("ca marche");
+        return a.lifespan - b.lifespan;
+      });}
+      const filterFunc = (a) => a.name.includes(this.search);
+      data.filter(filterFunc);
+      //localStorage.setItem("typeActuel", this.animalsSortType);
 			return data;
-		}
-    },
+  }
+  },
   
 	data() {
     return {
