@@ -75,6 +75,8 @@ h3 {
     flex-direction: column;
     align-items: space-around;
     justify-items: space-around;
+    min-height: 300px;
+    position: relative;
     border-radius: 10px;
     box-shadow: 0 70px 63px -60px black;
 }
@@ -84,7 +86,9 @@ h3 {
     position: absolute;
     text-align: start;
     width: inherit;
-    margin-top: 75px;
+    margin-top: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .Animal #photo{
@@ -105,6 +109,14 @@ p{
    margin-top: 0;
    font-style: italic;
    color:white;
+
+}
+
+@media (max-width: 360px) {
+  .Animal #infos{
+    margin-top: 25px;
+
+  }
 
 }
 
