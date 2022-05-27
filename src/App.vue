@@ -1,24 +1,13 @@
 <template>
   <div id="app">
-      <div id="espace_logo">
-          <img id="logo" alt="logo" src="./assets/logo.png">
+      <div id="logo_space">
+          <img id="logo" alt="logo_zoo" src="./assets/logo.png">
      </div>
-     <div class="zoo_options">
-          <input id="recherche" type="text" v-model="search" placeholder="Chercher un animal">
-          <div class="tri">
-            <label id="tri_titre" for="animal_tri" >Trier par : </label>
-            <select v-model="animalsSortType" id="animal_tri">
-              <option value="AZNoms">Noms de A à Z</option>
-              <option value="ZANoms">Noms de Z à A</option>
-              <option value="AZNomsLatins">Noms Latins de A à Z</option>
-              <option value="ZANomsLatins">Noms Latins de Z à A</option>
-              <option value="VieSup">Duree de vie</option>
-            </select>
-          </div>
-          <button id="refresh" v-on:click="Rafraichir">Rafraichir</button>	
+      <Header v-on:refresh="refresh" :search.sync="search"  :animalsSortType.sync="animalsSortType"/>
+      <div v-if="animalsOrganizedData.length==0">
+        <img id="oups" alt="oups_picture" src="./assets/oups.png">
       </div>
-
-      <div id="zoo">
+      <div v-else id="zoo">
         <Animal
           v-for="animal in animalsOrganizedData"
           :key="animal.id"
@@ -35,7 +24,13 @@
           :poidsMin="animal.weight_min"
           />
        </div>
-      <label id="raison" >(en fait, ya que 10 animaux tirés au hasard dans tous les animaux répertoriés sur Wikipédia parce qu’il fallait payer pour pouvoir en avoir plus et je peux pas trop me permettre car j’essaie d’économiser pour le Canada de l’année prochaine et je ne suis même pas sûr d’être payé en stage cet été... )</label>
+
+      <div id="mention" :class="animalsOrganizedData.length==0?'hide':''">
+         <h4>(PS : Et oui...mon zoo ne peut accueillir que 10 animaux aléatoires car 10, c'est déjà beaucoup et quand on en a trop, on ne peux pas bien s'occuper de tous et moi, je pense à la condition animale !!!)</h4>
+       </div>
+       <div id="credits">
+         <h5>Développé par Flavien Lineuc - Mai 2022</h5>
+      </div>
   </div>
 
 </template>
@@ -43,17 +38,19 @@
 <script>
 
 import Animal from './components/animal.vue'
+import Header from './components/header.vue'
 import {getAnimaldata} from './API.js'
 
 export default {
-  name: 'Zoo',
+  name: 'ZooPage',
   components: {
-    Animal
+    Animal,
+    Header
   },
 
   computed: {
 		animalsOrganizedData: function() {
-      
+
       let lifespanSorted;
       let sortReversed;
       let data = this.animalData;
@@ -69,19 +66,22 @@ export default {
           lifespanSorted=true;
       }
 
-      if(this.animalsSortType=="AZNoms"||this.animalsSortType=="ZANoms") {  comparator = (a, b) => a.name.localeCompare(b.name) ;	  } 
-      else  comparator = (a, b) => a.latin_name.localeCompare(b.latin_name) ;
+      if(this.animalsSortType=="AZNoms"||this.animalsSortType=="ZANoms") {
+        comparator = (a, b) => a.name.localeCompare(b.name) ;
+      } else  comparator = (a, b) => a.latin_name.localeCompare(b.latin_name) ;
       data.sort(comparator);
       if(sortReversed==true) { data.reverse(); }
-      if(lifespanSorted==true){ data.sort(function (a, b) {
-        return a.lifespan - b.lifespan;
-      });}
-
+      if(lifespanSorted==true){
+        data.sort(function (a, b) {
+          return a.lifespan - b.lifespan;
+        });}
       const filterFunc = (a) => a.name.toLowerCase().includes(this.search.toLowerCase());
       data = data.filter(filterFunc);
-      
+
+      console.log(data);
 			return data;
-  }
+  },
+
   },
   
 	data() {
@@ -95,23 +95,18 @@ export default {
 
   created: function() {
 		this.retrieveAnimalData()
+    
 	},
 
-  watch:{
-    animalsSortType : function(nvoanimalsSortType){
-       localStorage.setItem("animalsSortType",nvoanimalsSortType);
-    },
-  },
 
 	methods: {
 			async retrieveAnimalData() {
 					this.animalData = await getAnimaldata()
-          console.log(this.animalData)
 			},
 
-      async Rafraichir(event) {
+      async refresh(event) {
       this.retrieveAnimalData();
-			event.target.text = "Bouton appuyé"
+			event.target.text = "Bouton appuyé";
 		}
 	}
 
@@ -139,52 +134,48 @@ export default {
   align-items: center;
 }
 
-.zoo_options{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-content: space-around;
-  font-family: Helvetica;
-  background: black;
-  padding-block: 10px;
-  border-radius: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
 #logo{
   object-fit:contain;
   width: 50%;
 }
 
+#oups{
+  display: block;
+margin-left: auto;
+margin-right: auto;
+padding-top: 40px;
+width: 50%;
+}
 
-#espace_logo{
+#logo_space{
 text-align: center;
 width: 100%;
 }
 
-#raison{
+#mention, #credits{
   padding-block: 20px;
   text-align: center;
+  bottom: 20px;
 }
 
-#refresh #recherche #tri_titre{
-    font-family: Helvetica;
-    font-size:16px ;
+.hide{
+display:none;
+} 
+
+
+h4, h5 {
+  size: 10px;
+  margin: 0;
 }
 
-#tri_titre{
-  color: white;
-}
 
 @media (max-width: 450px) {
   #zoo{
     font-size:12px ;
   }
-  .zoo_options{
-    flex-wrap:wrap;
+  #logo, #oups {
+      width: 75%;
   }
-
 }
 
 </style>

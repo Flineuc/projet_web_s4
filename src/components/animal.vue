@@ -1,24 +1,23 @@
 <template>
   <div class="Animal">
-    <h2 class="nom"> {{nom}} </h2>
-    <p class="nom_latin"> {{nom_latin}} </p>
+    <h2 class="name"> {{nom}} </h2>
+    <p class="latin_name"> {{nom_latin}} </p>
     <div id="photo">
-          <img alt="image_animal" v-bind:src="chemin_image" width=100% height=100%>
+          <img alt="animal_picture" v-bind:src="chemin_image" width=100% height=100%>
      </div> 
-     <div id="infos">
+     <div id="description">
       <h3>Type</h3>
         <label>{{type}}</label>
-      <h3 class="caract">Caractéristiques</h3>
+      <h3 class="details">Caractéristiques</h3>
         <li> <label> Nourriture: </label>{{nourriture}}</li>
         <li> <label> Durée de vie: </label>{{dureeVie}}<label> ans </label> </li>
         <li>  <label> Habitat: </label>{{habitat}} </li>
-        
       <h3>Taille</h3>
         <label>De </label>{{hauteurMin}}
-        <label>à </label>{{hauteurMax}}<label> pieds </label>
+        <label>à </label>{{hauteurMax}}<label> pieds (1 pied = 0.3 m)</label>
       <h3>Poids</h3>
         <label>De </label>{{poidsMin}}
-        <label>à </label>{{poidsMax}}<label>Kg </label>
+        <label>à </label>{{poidsMax}}<label> livres (1 livre = 0.45 Kg)</label>
     </div>
   </div>
 </template>
@@ -42,7 +41,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 h2 {
   margin-block-start: 0em;
@@ -61,7 +59,7 @@ h3 {
    margin-top: 10px;
 }
 
-.caract {
+.details {
   display: flex;
   flex-direction: column;
 }
@@ -75,17 +73,17 @@ h3 {
     flex-direction: column;
     align-items: space-around;
     justify-items: space-around;
-    min-height: 300px;
+    min-height: 330px;
     position: relative;
     border-radius: 10px;
     box-shadow: 0 70px 63px -60px black;
 }
 
-.Animal #infos{
+.Animal #description{
   opacity: 0;
     position: absolute;
     text-align: start;
-    width: inherit;
+    width: fit-content;
     margin-top: 60px;
     margin-left: 10px;
     margin-right: 10px;
@@ -100,7 +98,7 @@ h3 {
   filter: blur(4px) brightness(50%);
 }
 
-.Animal:hover #infos{
+.Animal:hover #description{
   opacity: 1;
 }
 
@@ -112,10 +110,13 @@ p{
 
 }
 
-@media (max-width: 360px) {
-  .Animal #infos{
-    margin-top: 25px;
-
+@media (max-width: 450px) {
+  .Animal #description{
+    margin-top: 30px;
+    margin-right: 10px;
+  }
+  .Animal{
+    min-height: 250px;
   }
 
 }
