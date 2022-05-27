@@ -29,7 +29,7 @@
          <h4>(PS : Et oui...mon zoo ne peut accueillir que 10 animaux aléatoires car 10, c'est déjà beaucoup et quand on en a trop, on ne peux pas bien s'occuper de tous et moi, je pense à la condition animale !!!)</h4>
        </div>
        <div id="credits">
-         <h5>Développé par Flavien Lineuc - Mai 2022</h5>
+         <h5>Développé par Flavien LineUp - Mai 2022</h5>
       </div>
   </div>
 
